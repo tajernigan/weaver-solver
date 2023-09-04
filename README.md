@@ -1,6 +1,6 @@
 # Weaver Solver
 
-Welcome to the Weaver Solver repository! This project consists of two parts both is seperate folders.
+Welcome to the Weaver Solver repository! This project consists of two parts both are in seperate folders.
 
 ## Overview
 
