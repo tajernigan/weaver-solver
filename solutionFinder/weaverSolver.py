@@ -77,6 +77,7 @@ print()
 
 '''
 these are different test cases
+'''
 #solution = find_shortest_path('tilt', 'tilt', 1) # optimal = 0
 #solution = find_shortest_path('hilt', 'tilt', 1) # optimal = 1
 #solution = find_shortest_path('hill', 'tilt', 1) # optimal = 2
@@ -95,5 +96,4 @@ these are different test cases
 #solution = find_shortest_path('ahem', 'unau', 1) #optimal = 15
 #solution = find_shortest_path('eddo', 'unau', 1) #optimal = 16
 #solution = find_shortest_path('atap', 'unau', 1) #optimal = 17
-solution = find_shortest_path('chef', 'cook', 1) #optimal = ?
-'''
+#solution = find_shortest_path('chef', 'cook', 1) #optimal = ?
