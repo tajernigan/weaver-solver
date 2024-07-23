@@ -1,67 +1,81 @@
 import time
 import json
 import statistics
+def backTrack(prevStart, prevEnd, middle):
+    start = []
+    end = [middle]
+    word = middle
+    while word != "":
+        end.append(prevEnd[word])
+        word = prevEnd[word]
+    word = middle
+    while word != "":
+        start.insert(0, prevStart[word])
+        word = prevStart[word]
+    return start[1:] + end[:-1]
 
-def check_sets(small, large): # used to check if a word from one set is in another
-    for word in small:
-        if word in large:
-            return True
-    return False
+def find_shortest_path(start, end, graph):
+    prevStart, prevEnd = {start: ""}, {end: ""}
+    startMap, endMap = {start}, {end}
+    startExplored, endExplored = set(), set()
+    while startMap and endMap:
+        nextStart, nextEnd = set(), set()
+
+        for word in startMap:
+            startExplored.add(word)
+            if word in endMap:
+                return backTrack(prevStart, prevEnd, word)
+            for neighbor in graph[word]:
+                if neighbor not in startExplored and neighbor not in startMap:
+                    prevStart[neighbor] = word
+                    nextStart.add(neighbor)
+        startMap = nextStart
+
+        for word in endMap:
+            endExplored.add(word)
+            if word in startMap:
+                return backTrack(prevStart, prevEnd, word)
+            for neighbor in graph[word]:
+                if neighbor not in endExplored and neighbor not in endMap:
+                    prevEnd[neighbor] = word
+                    nextEnd.add(neighbor)
+        endMap = nextEnd
+
+    return None
+        
+
+
 
 '''this function recursively checks branches at n depth until it finds a branch where the start and end word share a equal word or have words that are one letter of using 
 the "one_letter_off" function, then the function call the "split_path" function which helps split the branches and then calls this function again, this function and "split_path"
 call each other back and forth until each nodes is found, thus returning a list of words of the optimal solution'''
-def find_shortest_path(start_word, goal, explored):
-    start_word, goal = set(start_word), set(goal) # make sure input is correct
-    if start_word == set() or goal == set():
-        return 'no solution found'
-    if (len(start_word) <= len(goal)): # find smaller set
-        if check_sets(start_word, goal): 
-            pass
-    else:
-        if check_sets(goal, start_word):
-            pass
-    return 
-
 
 #this code loads in a graph with every four letter word as a key with its values being the next possible nodes (words that are one letter off)
 with open('graph.json', 'r') as infile:
-    graph = json.load(infile)
-graph['explored'] = set()
+    map = json.load(infile)
 
-#this block of code takes user input and then gives the solution and how long it took to find it
-# print("This is a program that can solve the optimal solution to the online game weaver, if you have never heard of this game the url is https://wordwormdormdork.com/")
-# print()
-# start_word = input('Enter the start word: ')
-# end_word = input('Enter the end word: ')
-# t1 = time.time()
-# solution = find_shortest_path(start_word, end_word, 1)
-# t2 = time.time()
-# print(f'optimal solution = {len(solution) - 1}')
-# print(solution)
-# print(f'this took {(t2 - t1):.5f} seconds to solve')
-# print()
 
-# t1 = time.time()
-# solution = find_shortest_path('tilt', 'tilt', 1) # optimal = 0
-# solution = find_shortest_path('hilt', 'tilt', 1) # optimal = 1
-# solution = find_shortest_path('hill', 'tilt', 1) # optimal = 2
-# solution = find_shortest_path('hall', 'tilt', 1) # optimal = 3
-# solution = find_shortest_path('plat', 'form', 1) # optimal = 4
-# solution= find_shortest_path('left', 'turn', 1) #optimal = 5
-# solution = find_shortest_path('very', 'much', 1) # optimal = 6
-# solution= find_shortest_path('swan', 'lake', 1) #optimal = 7
-# solution = find_shortest_path('anta', 'unau', 1) # optimal = 8
-# solution = find_shortest_path('acta', 'unau', 1) # optimal = 9
-# solution = find_shortest_path('abas', 'unau', 1) # optimal = 10
-# solution = find_shortest_path('aahs', 'odic', 1) # optimal = 11
-# solution = find_shortest_path('aahs', 'unau', 1) #optimal = 12
-# solution = find_shortest_path('plat', 'unau', 1) #optimal = 13
-# solution = find_shortest_path('star', 'unau', 1) #optimal = 14
-# solution = find_shortest_path('ahem', 'unau', 1) #optimal = 15
-# solution = find_shortest_path('eddo', 'unau', 1) #optimal = 16
-# solution = find_shortest_path('atap', 'unau', 1) #optimal = 17
-# solution = find_shortest_path('chef', 'cook', 1) #optimal = ?
-# t2 = time.time()
 
-# print(f'this took {(t2 - t1):.5f} seconds to solve')
+t1 = time.time()
+print ( find_shortest_path('tilt', 'tilt', map) )# optimal = 0
+print ( find_shortest_path('hilt', 'tilt', map) )# optimal = 1
+print ( find_shortest_path('hill', 'tilt', map) )# optimal = 2
+print ( find_shortest_path('hall', 'tilt', map) )# optimal = 3
+print ( find_shortest_path('plat', 'form', map) )# optimal = 4
+print (find_shortest_path('left', 'turn', map)) #optimal = 5
+print ( find_shortest_path('very', 'much', map) )# optimal = 6
+print (find_shortest_path('swan', 'lake', map)) #optimal = 7
+print ( find_shortest_path('anta', 'unau', map) )# optimal = 8
+print ( find_shortest_path('acta', 'unau', map) )# optimal = 9
+print ( find_shortest_path('abas', 'unau', map) )# optimal = 10
+print ( find_shortest_path('aahs', 'odic', map) )# optimal = 11
+print ( find_shortest_path('aahs', 'unau', map) )#optimal = 12
+print ( find_shortest_path('plat', 'unau', map) )#optimal = 13
+print ( find_shortest_path('star', 'unau', map) )#optimal = 14
+print ( find_shortest_path('ahem', 'unau', map) )#optimal = 15
+print ( find_shortest_path('eddo', 'unau', map) )#optimal = 16
+print ( find_shortest_path('atap', 'unau', map) )#optimal = 17
+print ( find_shortest_path('chef', 'cook', map) )#optimal = ?
+t2 = time.time()
+
+print(f'this took {(t2 - t1):.5f} seconds to solve')

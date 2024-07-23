@@ -1,6 +1,6 @@
 import time
 import json
-import statistics
+
 
 def find_shortest_path(start_word, goal, num):
     explored = set()
