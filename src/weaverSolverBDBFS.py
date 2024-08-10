@@ -45,7 +45,7 @@ def find_shortest_path(start, end, graph):
 
 #this code loads in a graph with every four letter word as a key with its values being the next possible nodes (words that are one letter off)
 if __name__ == '__main__':
-    with open('graph.json', 'r') as infile:
+    with open('src/files/words4.json', 'r') as infile:
         map = json.load(infile)
 
 

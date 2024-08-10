@@ -34,11 +34,11 @@ endWord = (''.join([i.text for i in end_word_row.find_elements(By.CLASS_NAME, 'b
 print("start word:", startWord)
 print("end word:", endWord)
 
-if len(startWord) != 4:
+if len(startWord) != 4 and len(startWord) != 5:
     driver.quit()
-    raise RuntimeError("This program only supports weaver puzzles of 4 letter words")
-
-with open('src/files/graph.json', 'r') as infile:
+    raise RuntimeError("This program only supports weaver puzzles of 4 or 5 letter words")
+    
+with open(f'src/files/words{len(startWord)}.json', 'r') as infile:
     map = json.load(infile)
 
 solution = find_shortest_path(startWord, endWord, map)

@@ -1,25 +1,36 @@
 import time
 import json
 
-f = open('/Users/tajernigan/codingProjects/weaver-solver/longestDistanceGraph/fourLettersDict.txt')
+f = open('five_letter_words.txt')
 
-words = [word for word in f]
+words = [word.strip() for word in f]
 
 def one_letter_off(word_one, word_two):
-    return sum([word_one[i] == word_two[i] for i in range(4)]) == 3
+    if len(word_one) != len(word_two):
+        return False
+    difference_count = 0
+    for i in range(len(word_one)):
+        if word_one[i] != word_two[i]:
+            difference_count += 1
+        if difference_count > 1:
+            return False
+    return difference_count == 1
 
 t1 = time.time()
 graph = {}
+
 for word in words:
-    word = word.strip()
-    graph[word] = []
-    for wordy in words:
-        if one_letter_off(word, wordy):
-            graph[word].append(wordy.strip())
+    if word not in graph:
+        graph[word] = []
+    for other_word in words:
+        if word != other_word and one_letter_off(word, other_word):
+            graph[word].append(other_word)
 t2 = time.time()
 
 print(f'this took {(t2 - t1):.5f} seconds to create')
 
-with open('set.json', 'w') as outfile:
+print(one_letter_off('horse', 'torse'))
+
+with open('words5.json', 'w') as outfile:
    json.dump(graph, outfile)
 

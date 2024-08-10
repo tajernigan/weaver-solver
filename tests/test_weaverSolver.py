@@ -5,7 +5,7 @@ from src.weaverSolverBDBFS import find_shortest_path
 class TestWeaverSolver(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        with open('src/files/graph.json', 'r') as infile:
+        with open('src/files/words4.json', 'r') as infile:
             cls.graph = json.load(infile)
 
     def test_find_shortest_path(self):
