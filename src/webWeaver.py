@@ -3,20 +3,26 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 from weaverSolverBDBFS import find_shortest_path, backTrack
 import pyautogui
 import json
 import time
 
-# functions for trying to send keys using 
-def try_send(driver, by, value, wait_time, keys):
-    try:
-        WebDriverWait(driver, wait_time).until(EC.presence_of_element_located((by, value))).send_keys(keys)
-    except Exception as e:
-        print(f"Element not found or not interactable within {wait_time} seconds")
+# Chrome options set to speed up initialization, can remove the args
+chrome_options = Options()
+chrome_options.add_argument("--no-sandbox") 
+chrome_options.add_argument("--disable-dev-shm-usage") 
 
 # Initialize a web driver 
-driver = webdriver.Chrome()
+print("initializing WebDriver...")
+try:
+    driver = webdriver.Chrome(options=chrome_options)
+    print("WebDriver initialized successfully")
+except Exception as e:
+    print(f"Error initializing WebDriver: {e}")
+    raise
+print("loading weaver webpage...")
 driver.get('https://wordwormdormdork.com/') 
 
 start_word_row = driver.find_element(By.CLASS_NAME, 'startWordRow')

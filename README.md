@@ -1,29 +1,38 @@
 # Weaver Solver
 
-Welcome to the Weaver Solver repository! This project consists of two parts both are in seperate folders.
+Welcome to the Weaver Solver repository! This project is dedicated to solving the optimal solution for the online game ["Weaver"](https://wordwormdormdork.com/).
 
 ## Overview
 
-The Weaver Solver project focuses on solving the optimal solution to the online game "Weaver".
+This project looks to optimize an algorithm to solver the word game "Weaver". The current fastest algorithm is a Bi-Direction BFS which solves 4000 cases in about 7 seconds. There is also a webWeaver module which automates the daily weaver through selenium.
 
-## Folders
+## How to use weaver-solver
 
-### `solutionFinder`
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/tajernigan/weaver-solver.git
+    cd weaver-solver
+    ```
 
-**Description**: 
-- This folder contains the Python file that finds the optimal solution to weaver as well as the graph the programs uses in a json file.
+2. Install the required packages:
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-**Usage**:
-- Inorder to run this Python file to get the desired results make sure that the "graph.json" file is in the directory you are running the python file in.
+3. Running testing for weaverSolverBDBFS:
+    ```sh
+    python -m unittest discover tests
+    ```
 
-### `longestDistanceGraph`
+4. Running webWeaver:
+    ```sh
+    python src/webWeaver.py
+    ```
 
-**Description**: 
-- This folder contains the graph of all four letters words with there longest solutions, meaning the nodes furthest away in terms of the game weaver. 
-- It contains the entire 4 letter word dictionary and the code I used to make the graph which requires the "graph.json" file.
-- I wouldn't recommend running the python file as the "longestDistanceGraph.json" took about 4 hours to make, so I already did the dirty work of running the program for 4 hours so all you need is the graph.
-  
+## Issues
 
-**Usage**: 
-- If you would like to look up items in the graph I would recommend using a python file and importing the graph from the json file into the python file. 
-- If you have the dictionary of 4 letter words in your directory you can parse through all of them if your interested in getting the statistics of all the longest solutions.
+Check the docs directory for documentation or if anything in the program doesn't work as planned.
+
+## Contributing 
+
+There is a TODO.md file in the docs directory which are things im looking to fix / improve in the project. If there are other things you see or think can be improved feel free to submit a pull request or report it in the issues tab, I appreciate any feedback :)

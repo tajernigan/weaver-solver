@@ -42,13 +42,6 @@ def find_shortest_path(start, end, graph):
         endMap = nextEnd
 
     return None
-        
-
-
-
-'''this function recursively checks branches at n depth until it finds a branch where the start and end word share a equal word or have words that are one letter of using 
-the "one_letter_off" function, then the function call the "split_path" function which helps split the branches and then calls this function again, this function and "split_path"
-call each other back and forth until each nodes is found, thus returning a list of words of the optimal solution'''
 
 #this code loads in a graph with every four letter word as a key with its values being the next possible nodes (words that are one letter off)
 if __name__ == '__main__':
