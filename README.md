@@ -7,7 +7,7 @@ Welcome to the Weaver Solver repository! This project is dedicated to solving th
 
 ## Overview
 
-This project looks to optimize an algorithm to solver the word game "Weaver". The current fastest algorithm is a Bi-Direction BFS which solves 4000 cases in about 7 seconds. There is also a webWeaver module which automates the daily weaver through selenium.
+This project looks to optimize an algorithm to solver the word game "Weaver". The current fastest algorithm is a Bi-Direction BFS which solves 10000 cases in about 2 seconds. There is also a webWeaver module which automates the daily weaver through selenium.
 
 ## How to use weaver-solver
 
