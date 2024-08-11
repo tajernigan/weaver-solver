@@ -2,6 +2,9 @@
 
 Welcome to the Weaver Solver repository! This project is dedicated to solving the optimal solution for the online game ["Weaver"](https://wordwormdormdork.com/).
 
+## Demo
+![output](https://github.com/user-attachments/assets/bb4a32ca-df31-4329-afbc-31b17595fe94)
+
 ## Overview
 
 This project looks to optimize an algorithm to solver the word game "Weaver". The current fastest algorithm is a Bi-Direction BFS which solves 4000 cases in about 7 seconds. There is also a webWeaver module which automates the daily weaver through selenium.
