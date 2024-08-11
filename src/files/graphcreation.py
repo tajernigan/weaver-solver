@@ -1,10 +1,6 @@
 import time
 import json
 
-f = open('five_letter_words.txt')
-
-words = [word.strip() for word in f]
-
 def one_letter_off(word_one, word_two):
     if len(word_one) != len(word_two):
         return False
@@ -16,21 +12,25 @@ def one_letter_off(word_one, word_two):
             return False
     return difference_count == 1
 
-t1 = time.time()
-graph = {}
+if __name__ == "__main__":
 
-for word in words:
-    if word not in graph:
-        graph[word] = []
-    for other_word in words:
-        if word != other_word and one_letter_off(word, other_word):
-            graph[word].append(other_word)
-t2 = time.time()
+    f = open('five_letter_words.txt')
 
-print(f'this took {(t2 - t1):.5f} seconds to create')
+    words = [word.strip() for word in f]
 
-print(one_letter_off('horse', 'torse'))
+    t1 = time.time()
+    graph = {}
 
-with open('words5.json', 'w') as outfile:
-   json.dump(graph, outfile)
+    for word in words:
+        if word not in graph:
+            graph[word] = []
+        for other_word in words:
+            if word != other_word and one_letter_off(word, other_word):
+                graph[word].append(other_word)
+    t2 = time.time()
+
+    print(f'this took {(t2 - t1):.5f} seconds to create')
+
+    with open('words5.json', 'w') as outfile:
+        json.dump(graph, outfile)
 

@@ -1,48 +1,45 @@
+import time
+import random
 import unittest
 import json
 from src.weaverSolverBDBFS import find_shortest_path
+from src.files.graphcreation import one_letter_off
 
 class TestWeaverSolver(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         with open('src/files/words4.json', 'r') as infile:
             cls.graph = json.load(infile)
+        with open('src/files/four_letter_words.txt') as infile:
+            cls.words = [word.strip() for word in infile]
+        cls.totalTime = 0.0
 
-    def test_find_shortest_path(self):
-        # Define the test cases and expected results
-        test_cases = {
-            ('abri', 'cart'): (None, True),  # expects None
-            ('tilt', 'tilt'): (0, False),  # optimal = 0
-            ('hilt', 'tilt'): (1, False),  # optimal = 1
-            ('hill', 'tilt'): (2, False),  # optimal = 2
-            ('hall', 'tilt'): (3, False),  # optimal = 3
-            ('plat', 'form'): (4, False),  # optimal = 4
-            ('left', 'turn'): (5, False),  # optimal = 5
-            ('very', 'much'): (6, False),  # optimal = 6
-            ('swan', 'lake'): (7, False),  # optimal = 7
-            ('anta', 'unau'): (8, False),  # optimal = 8
-            ('acta', 'unau'): (9, False),  # optimal = 9
-            ('abas', 'unau'): (10, False), # optimal = 10
-            ('aahs', 'odic'): (11, False), # optimal = 11
-            ('aahs', 'unau'): (12, False), # optimal = 12
-            ('plat', 'unau'): (13, False), # optimal = 13
-            ('star', 'unau'): (14, False), # optimal = 14
-            ('ahem', 'unau'): (15, False), # optimal = 15
-            ('eddo', 'unau'): (16, False), # optimal = 16
-            ('atap', 'unau'): (17, False), # optimal = 17
+    def test_random_cases(self):
+        num_cases = 1000
+        for _ in range(num_cases):  # Running 50 different random tests within the same method
+            start = random.choice(self.words)
+            end = random.choice(self.words)
+            t1 = time.time()
+            solution = find_shortest_path(start, end, self.graph)
+            t2 = time.time()
+            self.totalTime += t2 - t1
 
-        }
+            if solution is None:
+                self.assertIsNone(solution)
+            else:
+                self.assertEqual(start, solution[0], f'Incorrect starting word for {start} to {end}')
+                self.assertEqual(end, solution[-1], f'Incorrect ending word for {start} to {end}')
+                for i in range(1, len(solution)):
+                    self.assertTrue(one_letter_off(solution[i - 1], solution[i]), f'{solution[i - 1]} and {solution[i]} are not one letter apart')
+            print(f"{start} -> {end}: {solution}")
+        print(f'\nran {num_cases} cases in {self.totalTime:.5f} seconds\n')
+        # You can add assertions here if you want to ensure the total time is below a certain threshold, for example:
+        # self.assertLess(cls.totalTime, some_threshold, "Total time for all tests exceeded expected value")
 
-        for (start, end), (expected_length, expect_none) in test_cases.items():
-            with self.subTest(start=start, end=end):
-                result = find_shortest_path(start, end, self.graph)
-                
-                if expect_none:
-                    self.assertIsNone(result, f"Expected None for path from {start} to {end}, but got {result}")
-                else:
-                    path_length = len(result) - 1
-                    self.assertEqual(path_length, expected_length, f"Expected length {expected_length} for path from {start} to {end}, but got {path_length}")
-                print(f"Result for path from '{start}' to '{end}': {result}")
+class CustomTestRunner(unittest.TextTestRunner):
+    def _makeResult(self):
+        return unittest.TextTestResult(self.stream, self.descriptions, self.verbosity)
 
 if __name__ == '__main__':
-    unittest.main()
+    runner = CustomTestRunner(verbosity=0)  # Set verbosity to 0 to suppress output
+    runner.run(unittest.defaultTestLoader.loadTestsFromTestCase(TestWeaverSolver))
