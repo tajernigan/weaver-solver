@@ -1,0 +1,48 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from src.weaverSolver import find_shortest_path
+import json
+import time
+
+# Chrome options set to speed up initialization, can remove the args
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox") 
+chrome_options.add_argument("--disable-dev-shm-usage") 
+
+# Initialize a web driver 
+print("initializing WebDriver...")
+try:
+    driver = webdriver.Chrome(options=chrome_options)
+    print("WebDriver initialized successfully")
+except Exception as e:
+    print(f"Error initializing WebDriver: {e}")
+    raise
+print("loading weaver webpage...")
+driver.get('https://wordwormdormdork.com/') 
+
+start_word_row = driver.find_element(By.CLASS_NAME, 'startWordRow')
+end_word_row = driver.find_element(By.CLASS_NAME, 'endWordRow')
+
+startWord = (''.join([i.text for i in start_word_row.find_elements(By.CLASS_NAME, 'block')])).lower()
+endWord = (''.join([i.text for i in end_word_row.find_elements(By.CLASS_NAME, 'block')])).lower()
+
+print("start word:", startWord)
+print("end word:", endWord)
+
+if len(startWord) != 4 and len(startWord) != 5:
+    driver.quit()
+    raise RuntimeError("This program only supports weaver puzzles of 4 or 5 letter words")
+    
+with open(f'src/files/words{len(startWord)}.json', 'r') as infile:
+    map = json.load(infile)
+
+time
+solution = find_shortest_path(startWord, endWord, map)
+
+
+print(*solution, sep=' -> ')
+
+driver.quit()
