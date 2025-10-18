@@ -29,7 +29,12 @@ This project looks to optimize an algorithm to solver the word game "Weaver". Th
 
 4. Running webWeaver:
     ```sh
-    python src/webWeaver.py
+    python -m weaver.webWeaver
+    ```
+
+5. Run w/ headless mode:
+    ```sh
+    python -m weaver.webWeaver true
     ```
 
 ## Issues

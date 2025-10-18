@@ -1,5 +1,6 @@
 import time
-from graphcreation import load_graph
+
+from .graphcreation import load_graph
 
 class WeaverSolver:
 

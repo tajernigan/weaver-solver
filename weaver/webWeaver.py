@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
-from weaverSolver import WeaverSolver
+from .weaverSolver import WeaverSolver
 import pyautogui
 import time
 import sys
@@ -48,7 +48,7 @@ def main(args):
 
     driver = init_webdriver(headless=headless)
     print("Loading Webpage...\n")
-    driver.get('https://wordwormdormdork.com/')
+    driver.get('https://wordwormdormdork.com/weaver/')
 
     start_word, end_word = scrape_start_end(driver=driver)
 

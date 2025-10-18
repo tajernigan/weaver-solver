@@ -1,13 +1,15 @@
 import time
 import pickle as pkl
-import networkx as nx
-import os
-import sys
+from pathlib import Path
 from collections import defaultdict
+import networkx as nx
+import sys
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 def words_list(word_length):
     word_list = []
-    with open("data/dictionary.txt", 'r') as words:
+    with (DATA_DIR / "dictionary.txt").open('r') as words:
         for word in words:
             word = word.strip()
             if len(word) == word_length: # return words of the corresponding length
@@ -17,9 +19,10 @@ def words_list(word_length):
 # returns a networkx Graph of letters of the given word length as verticies with bidirectional edges between words that are one letter off
 def load_graph(word_length):
     # check if the graph has already been created
-    if os.path.exists(f'data/words{word_length}.pkl'):
+    pickle_path = DATA_DIR / f'words{word_length}.pkl'
+    if pickle_path.exists():
         # load and return graph if already exists
-        with open(f'data/words{word_length}.pkl', 'rb') as f:
+        with pickle_path.open('rb') as f:
             G = pkl.load(f)
             return G
 
@@ -44,7 +47,7 @@ def load_graph(word_length):
                     G.add_edge(word, neighbor) # add bidirection
     
     # load graph into 
-    with open(f'data/words{word_length}.pkl', "wb") as f: 
+    with pickle_path.open("wb") as f:
         pkl.dump(G, f)
     
     return G # return newly created graph
@@ -68,4 +71,3 @@ if __name__ == "__main__":
     t2 = time.time()
 
     print(f'load took {(t2 - t1):.5f} seconds')
-

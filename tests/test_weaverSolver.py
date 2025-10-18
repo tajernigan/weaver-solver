@@ -1,8 +1,9 @@
 import time
 import random
 import unittest
-from src.weaverSolver import WeaverSolver
-from src.graphcreation import words_list
+
+from weaver.weaverSolver import WeaverSolver
+from weaver.graphcreation import words_list
 
 class TestWeaverSolver(unittest.TestCase):
     @classmethod
